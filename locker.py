@@ -24,10 +24,8 @@ def desorden_ejecutora():
 
 def apagado_directo():
     os.system('shutdown -s -f -t 0')
-    
-maximize_console()
+
 os.system('color 3')
-orden_ejecutora()
 
 title = r'''
     /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$  /$$      /$$  /$$$$$$  /$$$$$$$  /$$$$$$$ 
@@ -39,9 +37,9 @@ title = r'''
     | $$      | $$  | $$|  $$$$$$/|  $$$$$$/| $$/   \  $$|  $$$$$$/| $$  | $$| $$$$$$$/
     |__/      |__/  |__/ \______/  \______/ |__/     \__/ \______/ |__/  |__/|_______/                                                                                                                                                   
 '''
-
+print(title)    
+orden_ejecutora()
 maximize_console()
-print(title)
 time.sleep(1)
 clear()
 
