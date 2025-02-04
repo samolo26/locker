@@ -1,8 +1,8 @@
 import time
 import os
-import pyautogui
-import discord_webhook 
 import base64
+import ctypes
+import threading
 
 contraseña_base64 = 'cGVwZTI2'
 contraseña = base64.b64decode(contraseña_base64).decode('utf-8')
@@ -13,11 +13,15 @@ def clear():
     os.system('cls')
 
 def maximize_console():
-    pyautogui.hotkey('F11')
-    
+    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+    ctypes.windll.user32.ShowWindow(hwnd, 3)  # Maximiza la ventana
+
 def orden_ejecutora():
     os.system('shutdown -s -f -t 18')
-    discord_webhook.DiscordWebhook(url=webhook, content="| INTENTO DE ACCESO |").execute()
+    def send_webhook():
+        import discord_webhook
+        discord_webhook.DiscordWebhook(url=webhook, content="| INTENTO DE ACCESO |").execute()
+    threading.Thread(target=send_webhook, daemon=True).start()
 
 def desorden_ejecutora():
     os.system('shutdown -a')    
@@ -40,29 +44,32 @@ title = r'''
 print(title)    
 orden_ejecutora()
 maximize_console()
-time.sleep(1)
 clear()
 
 print("  Que haces con mi PC malacandraculia\n")
 
 contraseña_input = str(input("\n  Inserte la contraseña: "))
 
+def send_webhook(content):
+    import discord_webhook
+    discord_webhook.DiscordWebhook(url=webhook, content=content).execute()
+
 if contraseña_input == contraseña:
-    discord_webhook.DiscordWebhook(url=webhook, content="| ACCESO AUTORIZADO |").execute()
+    threading.Thread(target=send_webhook, args=("| ACCESO AUTORIZADO |",), daemon=True).start()
     print("\n  ACCESO AUTORIZADO")
     desorden_ejecutora()
     time.sleep(1.7)
     os._exit(0)
 
 elif contraseña_input == "9421":
-    discord_webhook.DiscordWebhook(url=webhook, content="| SE HA USADO LA CONTRASEÑA DE EMERGENCIA |").execute()
+    threading.Thread(target=send_webhook, args=("| SE HA USADO LA CONTRASEÑA DE EMERGENCIA |",), daemon=True).start()
     print("\n  CONTRASEÑA DE EMERGENCIA INTRODUCIDA")
     desorden_ejecutora()
     time.sleep(1.7)
     os._exit(0)
 
 else:
-    discord_webhook.DiscordWebhook(url=webhook, content="| ACCESO DENEGADO |").execute()
+    threading.Thread(target=send_webhook, args=("| ACCESO DENEGADO |",), daemon=True).start()
     time.sleep(0.8)
     for _ in range(10):
         print("\n  ACCESO DENEGADO")
